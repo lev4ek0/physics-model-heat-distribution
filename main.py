@@ -17,7 +17,7 @@ def function2(xi):
     return math.cos(xi / 2)
 
 
-a = 1  # коэффициента температуропроводности
+a = 1  # коэффициент температуропроводности
 
 var = 2
 
@@ -27,8 +27,8 @@ arrayy = []
 def calculate(L, u0, ul, function):
     plt.style.use('seaborn-whitegrid')
     eps = 0.01
-    tau = 0.01
-    const = 100
+    tau = 0.001
+    const = 200
     delta = L / 20
     n = int(L / delta)
     result = []
@@ -64,13 +64,13 @@ def calculate(L, u0, ul, function):
             T.append(ul)
             result = T
             if t % const == 0:
-                plt.title("Моделирование распространени тепла в стержне после " + str(time_) + " сек")
+                plt.title("Моделирование распространени тепла в стержне после {:.2f} сек".format(time_))
                 plt.xlabel("X")
                 plt.ylabel("T")
                 xt.xaxis.set_major_locator(ticker.MultipleLocator(L / 10))
                 xt.yaxis.set_major_locator(ticker.MultipleLocator(abs(ul - u0) / 10))
                 plt.grid(True)
-                xt.plot(X[:n], T[:n])
+                xt.plot(X[:n + 1], T[:n + 1])
                 arrayy.append('{}.png'.format(time_))
                 plt.savefig('{}.png'.format(time_))
 
@@ -82,7 +82,7 @@ if var == 2:
     calculate(L=10, u0=1, ul=0,
               function=function2)  # Длина стержня, температура на одном конце, температура на другом конце, функция
 
-with imageio.get_writer('var{}.gif'.format(var), mode='I', duration=0.1) as writer:
+with imageio.get_writer('var{}.gif'.format(var), mode='I', duration=0.025) as writer:
     for filename in arrayy:
         image = imageio.imread(filename)
         writer.append_data(image)
