@@ -18,7 +18,7 @@ def function2(xi):
 
 
 a = 1  # коэффициент температуропроводности
-
+assert a != 0
 var = 2
 
 arrayy = []
